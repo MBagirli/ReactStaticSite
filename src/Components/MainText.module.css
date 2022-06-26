@@ -1,0 +1,59 @@
+@keyframes Appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.container {
+  animation: Appear;
+  animation-duration: 0.5s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #495057;
+  width: 40%;
+  height: 30%;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+  padding: 20px 40px;
+  z-index: 2;
+}
+
+.container__p {
+  text-align: center;
+  line-height: 1.5;
+}
+
+@media (max-width: 1209px) {
+  .container {
+    width: 60%;
+    height: 45%;
+  }
+}
+
+@media (max-width: 668px) {
+  .container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 521px) {
+  .container__h2 {
+    font-size: 15px;
+  }
+
+  .container__p {
+    font-size: 13px;
+  }
+}

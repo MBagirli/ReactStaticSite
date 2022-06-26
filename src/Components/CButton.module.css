@@ -1,0 +1,23 @@
+.btn {
+  border: 1px solid transparent;
+  width: 100%;
+  font-size: 20px;
+  padding: 4px 3px;
+  background-color: #882104;
+  color: #fff;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  cursor: pointer;
+  transition: all 0.3s;
+  transform: translateY(-1px);
+  background-color: #fd7e14;
+}
+
+@media (max-width: 521px) {
+  .btn {
+    padding: 2px 1.5px;
+  }
+}

@@ -1,0 +1,56 @@
+.ListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 20px;
+}
+
+.ListItem:not(:last-child) {
+  border-bottom: 1px solid #495057;
+}
+
+.ListItem__Meal__Name {
+  padding: 5px 0;
+}
+
+.ListItem__Meal__Info {
+  padding: 5px 0;
+}
+
+.ListItem__Meal__Price {
+  padding: 5px 0;
+  font-weight: 900;
+  color: #882104;
+}
+
+.ListItem__PriceContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.ListItem__PriceContainer__Amount {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ListItem__PriceContainer__Amount__p {
+  font-weight: 900;
+}
+
+.ListItem__PriceContainer__Amount__input {
+  display: block;
+  width: 40px;
+  height: 30px;
+  font-size: 24px;
+}
+
+@media (max-width: 521px) {
+  .ListItem__Meal__Info {
+    font-size: 13px;
+  }
+}

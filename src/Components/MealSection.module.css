@@ -1,0 +1,30 @@
+.container {
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 100px;
+}
+
+.container__list {
+  width: 60%;
+  list-style: none;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 20px 30px;
+  background-color: #fff;
+}
+
+@media (max-width: 668px) {
+  .container__list {
+    width: 80%;
+  }
+}
+
+@media (max-width: 521px) {
+  .container__list {
+    width: 90%;
+  }
+}

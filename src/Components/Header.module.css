@@ -1,0 +1,16 @@
+.header {
+  background-color: #882104;
+  height: 80px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  top: 0%;
+  width: 100%;
+  z-index: 555;
+}
+
+.header__description {
+  color: #fff;
+  font-weight: 600;
+}
