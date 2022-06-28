@@ -43,12 +43,12 @@ function App() {
     setTimeout(() => {
       setAnimation(false);
     }, 100);
-    setSum(()=>{
-      let i = 0;
+    setSum((prev)=>{
+      prev=0;
       Object.values(obj).forEach((item)=>{
-        i+=Number(item);
+        prev+=Number(item);
       });
-      return i;
+      return prev;
     })
   }
 
