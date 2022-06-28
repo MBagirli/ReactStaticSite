@@ -1,12 +1,12 @@
 import CButtonCss from "./CButton.module.css";
 
 const CButton = (props) => {
-  let AddHandler = () => {
-    props.Add(props.id);
+  let ClickHandler = (event) => {
+    props.add(event.target.id);
   };
 
   return (
-    <button onClick={AddHandler} id={props.id} className={CButtonCss.btn}>
+    <button id={props.id} onClick={ClickHandler} className={CButtonCss.btn}>
       {props.children}
     </button>
   );

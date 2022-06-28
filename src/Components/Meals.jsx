@@ -1,32 +1,35 @@
 import MealsCss from "./Meals.module.css";
 import CButton from "./CButton";
+import { useContext } from "react";
+import Add from "./Context/Add";
 import { useRef } from "react";
 
 const Meals = (props) => {
-  let AddHandler = (id) => {
-    props.Add(id, value.current.value);
-  };
+  let { ADD } = useContext(Add);
+  let inputValue = useRef();
 
-  let value = useRef();
+  let ClickHandler = (id) => {
+    ADD(id, inputValue.current.value);
+  };
 
   return (
     <li id={props.id} className={MealsCss.ListItem}>
       <div className={MealsCss.ListItem__Meal}>
         <h3 className={MealsCss.ListItem__Meal__Name}>{props.obj.meal}</h3>
         <i className={MealsCss.ListItem__Meal__Info}>{props.obj.info}</i>
-        <p className={MealsCss.ListItem__Meal__Price}>{props.obj.price}</p>
+        <p className={MealsCss.ListItem__Meal__Price}>${props.obj.price}</p>
       </div>
       <div className={MealsCss.ListItem__PriceContainer}>
         <div className={MealsCss.ListItem__PriceContainer__Amount}>
           <p className={MealsCss.ListItem__PriceContainer__Amount__p}>Amount</p>
           <input
-            ref={value}
+            ref={inputValue}
             className={MealsCss.ListItem__PriceContainer__Amount__input}
             type="number"
             min="0"
           />
         </div>
-        <CButton Add={AddHandler} id={props.id}>
+        <CButton add={ClickHandler} id={props.id}>
           +Add
         </CButton>
       </div>

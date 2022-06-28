@@ -1,48 +1,28 @@
 import { useContext } from "react";
+import Add from "../Context/Add";
 import List from "../MealSection.module.css";
 import Total from "./TotalAmount";
-import Add from "../Context/Add";
 import ListItem from "./PopupListItem";
 
-let PopupList = (props) => {
-  let { ArrayMeals, Obj } = useContext(Add);
+let PopupList = () => {
+  let { IdQuantity, ArrayofMeals } = useContext(Add);
 
-  let MinusHandler = (id) => {
-    props.minus(id);
-  };
-
-  let PlusHandler = (id) => {
-    props.plus(id);
-  };
-
-  let Meals = Object.values(Obj).map((item, index) => {
-    if (Number(item) === 0) {
-      return (
-        <ListItem key={index} id={"NotSelected"} obj={ArrayMeals[index]} />
-      );
-    } else {
-      return (
-        <ListItem
-          minus={MinusHandler}
-          plus={PlusHandler}
-          key={index}
-          id={"Selected"}
-          idbtn={index}
-          obj={ArrayMeals[index]}
-          quantity={item}
-        />
-      );
-    }
+  let Meals = Object.values(IdQuantity).map((item, index) => {
+    return (
+      <ListItem
+        key={index}
+        id={item === 0 ? "NotSelected" : "Selected"}
+        obj={ArrayofMeals[index]}
+        quantity={item}
+        btnid={Object.keys(IdQuantity)[index]}
+      />
+    );
   });
-
-  let CloseAndOrder = (bool) => {
-    props.cao(bool);
-  };
 
   return (
     <ul className={List.container__list}>
       {Meals}
-      <Total cao={CloseAndOrder} />
+      <Total />
     </ul>
   );
 };

@@ -3,7 +3,7 @@ import Header from './Components/Header';
 import HeroSection from './Components/HeroSection';
 import MealSection from './Components/MealSection';
 import Add from'./Components/Context/Add';
-import {  useState } from 'react';
+import { useState } from 'react';
 
 
 
@@ -21,84 +21,75 @@ function App() {
     {meal:'Pasta',info:'Delicious Italian food',price:31.99},
   ];
 
-  let [animation,setAnimation] = useState(false);
-  let [sum,setSum] = useState(0);
-  let [popup,setPopup] = useState(false);
 
-  let [obj,setObj] = useState(()=>{
-    let objMeals = {};
-    for (let i in mealsArray){
-      objMeals[`${i}`]=0;
+  //Animation of CartButton
+  const [animation,setAnimation] = useState(false);
+
+  //Popup
+  const [popup,setPopup] = useState(false);
+
+  //ID and Quantity
+  const [iq,setIQ] = useState(()=>{
+    let obj = {};
+    for(let i in mealsArray){
+      obj[`e${i}`]=0;
     }
-    return {...objMeals};
+    return obj;
   });
 
-
-  let AddHandler = (id,number) =>{
-    setObj(prev=>{
-      prev[`${id}`]=number;
+  //Add Button
+  let AddHandler = (id,quantity)=>{
+    setIQ(prev=>{
+      prev[`${id}`] = Number(quantity);
       return prev;
     });
     setAnimation(true);
-    setTimeout(() => {
+    setTimeout(()=>{
       setAnimation(false);
-    }, 100);
-    setSum((prev)=>{
-      prev=0;
-      Object.values(obj).forEach((item)=>{
-        prev+=Number(item);
-      });
-      return prev;
-    })
+    },100);
   }
 
-  let Popup = (bool)=>{
+  //Open Popup
+  let OpenPopup = (bool)=>{
     setPopup(bool);
   }
 
-  let CloseAndOrder = (bool) => {
+  //ClosePopup
+  let ClosePopup = (bool)=>{
     setPopup(bool);
-  };
+  }
 
-  let MinusHandler = (id) => {
-    setObj(prev=>{
+  //Minus
+  let Minus = (id)=>{
+    setIQ(prev=>{
       let obj={...prev}
-      obj[`${id}`]-=1
-      return {...obj};
-    })
-    setSum((prev)=>{
-      prev--;
-      return prev;
-    })
+      obj[`${id}`]-=1;
+      return obj;
+    });
     setAnimation(true);
-    setTimeout(() => {
+    setTimeout(()=>{
       setAnimation(false);
-    }, 100);
-  };
+    },100);
+  }
 
-  let PlusHandler = (id) => {
-    setObj(prev=>{
+  let Plus = (id)=>{
+    setIQ(prev=>{
       let obj={...prev}
-      obj[`${id}`]=Number(obj[`${id}`])+1;
-      return {...obj};
-    })
-    setSum((prev)=>{
-      prev++;
-      return prev;
-    })
+      obj[`${id}`]+=1;
+      return obj;
+    });
     setAnimation(true);
-    setTimeout(() => {
+    setTimeout(()=>{
       setAnimation(false);
-    }, 100);
-  };
-
+    },100);
+  }
 
   return (
-        <Add.Provider value={{ArrayMeals:mealsArray,Obj:obj,Animation:animation,Sum:sum,Popup:popup}}>
-          <PopupContainer plus={PlusHandler} minus={MinusHandler} cao={CloseAndOrder}/>
-          <Header popup={Popup} />
+        <Add.Provider value={{ArrayofMeals:mealsArray,IdQuantity:iq,ADD:AddHandler,Animation:animation,openPopup:OpenPopup,Popup:popup,closePopup:ClosePopup,minus:Minus,plus:Plus}}>
+          <PopupContainer />
+          <Header />
           <HeroSection />
-          <MealSection Add={AddHandler} />
+          <MealSection />
         </Add.Provider>
   );
 }

@@ -1,12 +1,16 @@
+import { useContext } from "react";
+import Add from "../Context/Add";
 import "./PopupListItem.css";
 
 const ListItem = (props) => {
+  let { minus, plus } = useContext(Add);
+
   let MinusHandler = (event) => {
-    props.minus(event.target.id);
+    minus(event.target.id);
   };
 
   let PlusHandler = (event) => {
-    props.plus(event.target.id);
+    plus(event.target.id);
   };
 
   return (
@@ -18,20 +22,20 @@ const ListItem = (props) => {
             {props.obj.price}
           </p>
           <p className="ItemContainer__info__container__quantity">
-            {props.quantity}
+            x{props.quantity}
           </p>
         </div>
       </div>
       <div className="ItemContainer__button">
         <button
+          id={props.btnid}
           onClick={MinusHandler}
-          id={props.idbtn}
           className="ItemContainer__button__btn"
         >
           -
         </button>
         <button
-          id={props.idbtn}
+          id={props.btnid}
           onClick={PlusHandler}
           className="ItemContainer__button__btn"
         >

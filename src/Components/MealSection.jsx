@@ -1,22 +1,24 @@
+import { useContext } from "react";
+import Add from "./Context/Add";
 import MealSectionCss from "./MealSection.module.css";
 import Meals from "./Meals";
-import Add from "./Context/Add";
-import { useContext } from "react";
 
-const MealSection = (props) => {
-  let { ArrayMeals } = useContext(Add);
+const MealSection = () => {
+  let { ArrayofMeals, IdQuantity } = useContext(Add);
 
-  let AddHandler = (id, number) => {
-    props.Add(id, number);
-  };
-
-  let AllMeals = ArrayMeals.map((item, index) => {
-    return <Meals Add={AddHandler} key={index} id={index} obj={item} />;
+  let meals = ArrayofMeals.map((item, index) => {
+    return (
+      <Meals
+        key={Object.keys(IdQuantity)[index]}
+        id={Object.keys(IdQuantity)[index]}
+        obj={item}
+      />
+    );
   });
 
   return (
     <section className={MealSectionCss.container}>
-      <ul className={MealSectionCss.container__list}>{AllMeals}</ul>
+      <ul className={MealSectionCss.container__list}>{meals}</ul>
     </section>
   );
 };
