@@ -1,148 +1,105 @@
-import { useReducer, useState } from 'react';
-import './App.css';
-import Add from './Components/Context/Add';
+import PopupContainer from './Components/Popup/PopupContainer';
 import Header from './Components/Header';
 import HeroSection from './Components/HeroSection';
 import MealSection from './Components/MealSection';
-import PopupContainer from'./Components/Popup/PopupContainer';
+import Add from'./Components/Context/Add';
+import {  useState } from 'react';
 
-let reduceNumber = (prev,action)=>{
-  if(action.listNumber){
-    switch(action.listNumber){
-    case 1:
-      return{
-        ...prev,
-        first:action.number
-      }
-    case 2:
-      return{
-        ...prev, 
-        second:action.number
-      }
-    case 3:
-      return{
-      ...prev,
-      third:action.number
-    }
-    default:
-      return{
-      ...prev,
-      fourth:action.number
-    }
-  }
-  } 
-  if(action.minus){
-    switch(action.food){
-    case 'Sushi':
-      return{
-        ...prev,
-        first:action.quantity-1
-      }
-    case 'Schnitzel':
-      return{
-        ...prev, 
-        second:action.quantity-1
-      }
-    case 'Dolma':
-      return{
-        ...prev, 
-        third:action.quantity-1
-      }
-    default:
-      return{
-        ...prev, 
-        fourth:action.quantity-1
-      }
-  }
-  }
-  if(action.plus){
-    switch(action.food){
-    case 'Sushi':
-      return{
-        ...prev,
-        first:action.quantity+1
-      }
-    case 'Schnitzel':
-      return{
-        ...prev, 
-        second:action.quantity+1
-      }
-    case 'Dolma':
-      return{
-        ...prev, 
-        third:action.quantity+1
-      }
-    default:
-      return{
-        ...prev, 
-        fourth:action.quantity+1
-      }
-  }
-  }
-}
+
 
 function App() {
 
+  let mealsArray = [
+    {meal:'Sushi',info:'Finest fish veggies',price:22.99},
+    {meal:'Schnitzel',info:'A german speciality',price:16.55},
+    {meal:'Dolma',info:'Delicious Azerbaijani food',price:20.99},
+    {meal:'Nuggets',info:'Delicious American food',price:21.99},
+    {meal:'Pizza',info:'Delicious Italian food',price:31.99},
+    {meal:'Doner',info:'Delicious Turkish food',price:51.99},
+    {meal:'Kebab',info:'Delicious Turkish food',price:51.99},
+    {meal:'Xinkal',info:'Delicious Georgian food',price:39.99},
+    {meal:'Pasta',info:'Delicious Italian food',price:31.99},
+  ];
+
   let [animation,setAnimation] = useState(false);
-  let [numbers,dispatchNumbers] = useReducer(reduceNumber,{first:0,second:0,third:0,fourth:0})
-  let [clicked,setClicked] = useState(false);
+  let [sum,setSum] = useState(0);
+  let [popup,setPopup] = useState(false);
 
-  let Adding = (numberfromMealSection,bool,id) => {
-    if(id==='m1' && (bool || (numbers.first!==numberfromMealSection))){
-      dispatchNumbers({listNumber:1,number:numberfromMealSection});
-      setAnimation(true);
-      setTimeout(function(){
-        setAnimation(false);
-      },100);
+  let [obj,setObj] = useState(()=>{
+    let objMeals = {};
+    for (let i in mealsArray){
+      objMeals[`${i}`]=0;
     }
-    if(id==='m2' && (bool || (numbers.second!==numberfromMealSection))){
-      dispatchNumbers({listNumber:2,number:numberfromMealSection});
-      setAnimation(true);
-      setTimeout(function(){
-        setAnimation(false);
-      },100);
-    }
-    if(id==='m3' && (bool || (numbers.third!==numberfromMealSection))){
-      dispatchNumbers({listNumber:3,number:numberfromMealSection});
-      setAnimation(true);
-      setTimeout(function(){
-        setAnimation(false);
-      },100);
-    }
-    if(id==='m4' && (bool || (numbers.fourth!==numberfromMealSection))){
-      dispatchNumbers({listNumber:4,number:numberfromMealSection});
-      setAnimation(true);
-      setTimeout(function(){
-        setAnimation(false);
-      },100);
-    }
+    return {...objMeals};
+  });
+
+
+  let AddHandler = (id,number) =>{
+    setObj(prev=>{
+      prev[`${id}`]=number;
+      return prev;
+    });
+    setAnimation(true);
+    setTimeout(() => {
+      setAnimation(false);
+    }, 100);
+    setSum(()=>{
+      let i = 0;
+      Object.values(obj).forEach((item)=>{
+        i+=Number(item);
+      });
+      return i;
+    })
+  }
+
+  let Popup = (bool)=>{
+    setPopup(bool);
+  }
+
+  let CloseAndOrder = (bool) => {
+    setPopup(bool);
   };
 
-  let ClickHandler = () => {
-    setClicked(true);
+  let MinusHandler = (id) => {
+    setObj(prev=>{
+      let obj={...prev}
+      obj[`${id}`]-=1
+      return {...obj};
+    })
+    setSum((prev)=>{
+      prev--;
+      return prev;
+    })
+    setAnimation(true);
+    setTimeout(() => {
+      setAnimation(false);
+    }, 100);
   };
 
-  let CloseHandler = () => {
-    setClicked(false);
+  let PlusHandler = (id) => {
+    setObj(prev=>{
+      let obj={...prev}
+      obj[`${id}`]=Number(obj[`${id}`])+1;
+      return {...obj};
+    })
+    setSum((prev)=>{
+      prev++;
+      return prev;
+    })
+    setAnimation(true);
+    setTimeout(() => {
+      setAnimation(false);
+    }, 100);
   };
 
-  let MinusHandler = (Item) => {
-    dispatchNumbers({...Item,minus:'minus'});
-  };
-
-  let PlusHandler = (Item) => {
-    dispatchNumbers({...Item,plus:'plus'});
-  };
 
   return (
-    <Add.Provider value={{numbers,animation,clicked}}>
-      <div className="App">
-        <PopupContainer plus={PlusHandler} minus={MinusHandler} close={CloseHandler} />
-        <Header Click={ClickHandler}/>
-        <HeroSection />
-        <MealSection Add={Adding} />
-      </div>
-    </Add.Provider>
+        <Add.Provider value={{ArrayMeals:mealsArray,Obj:obj,Animation:animation,Sum:sum,Popup:popup}}>
+          <PopupContainer plus={PlusHandler} minus={MinusHandler} cao={CloseAndOrder}/>
+          <Header popup={Popup} />
+          <HeroSection />
+          <MealSection Add={AddHandler} />
+        </Add.Provider>
   );
 }
 

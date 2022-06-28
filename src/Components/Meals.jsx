@@ -3,11 +3,11 @@ import CButton from "./CButton";
 import { useRef } from "react";
 
 const Meals = (props) => {
-  const value = useRef();
-
-  let AddingFood = (bool, id) => {
-    props.Add(value.current.value, bool, id);
+  let AddHandler = (id) => {
+    props.Add(id, value.current.value);
   };
+
+  let value = useRef();
 
   return (
     <li id={props.id} className={MealsCss.ListItem}>
@@ -20,14 +20,13 @@ const Meals = (props) => {
         <div className={MealsCss.ListItem__PriceContainer__Amount}>
           <p className={MealsCss.ListItem__PriceContainer__Amount__p}>Amount</p>
           <input
-            id={props.id}
             ref={value}
             className={MealsCss.ListItem__PriceContainer__Amount__input}
             type="number"
             min="0"
           />
         </div>
-        <CButton id={props.id} Add={AddingFood}>
+        <CButton Add={AddHandler} id={props.id}>
           +Add
         </CButton>
       </div>

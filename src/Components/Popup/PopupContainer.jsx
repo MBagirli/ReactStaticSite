@@ -1,26 +1,26 @@
-import { useContext } from "react";
 import Container from "./PopupContainer.module.css";
 import PopupList from "./PopupList";
 import Add from "../Context/Add";
+import { useContext } from "react";
 
 let PopupContainer = (props) => {
-  let { clicked } = useContext(Add);
+  let { Popup } = useContext(Add);
 
-  let CloseHandler = () => {
-    props.close();
+  let CloseAndOrder = (bool) => {
+    props.cao(bool);
   };
 
-  let MinusHandler = (Item) => {
-    props.minus(Item);
+  let MinusHandler = (id) => {
+    props.minus(id);
   };
 
-  let PlusHandler = (Item) => {
-    props.plus(Item);
+  let PlusHandler = (id) => {
+    props.plus(id);
   };
 
   return (
-    <div id={clicked ? Container.opened : ""} className={Container.container}>
-      <PopupList plus={PlusHandler} minus={MinusHandler} close={CloseHandler} />
+    <div id={Popup ? Container.opened : ""} className={Container.container}>
+      <PopupList plus={PlusHandler} minus={MinusHandler} cao={CloseAndOrder} />
     </div>
   );
 };

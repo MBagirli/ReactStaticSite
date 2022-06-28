@@ -1,75 +1,48 @@
-import List from "../MealSection.module.css";
-import TotalAmount from "./TotalAmount";
-import ListItem from "./PopupListItem";
-import Add from "../Context/Add";
 import { useContext } from "react";
+import List from "../MealSection.module.css";
+import Total from "./TotalAmount";
+import Add from "../Context/Add";
+import ListItem from "./PopupListItem";
 
 let PopupList = (props) => {
-  let { numbers } = useContext(Add);
+  let { ArrayMeals, Obj } = useContext(Add);
 
-  let MinusHandler = (Item) => {
-    props.minus(Item);
+  let MinusHandler = (id) => {
+    props.minus(id);
   };
 
-  let PlusHandler = (Item) => {
-    props.plus(Item);
+  let PlusHandler = (id) => {
+    props.plus(id);
   };
 
-  let obj1 = { food: "Sushi", price: 22.99, quantity: Number(numbers.first) };
+  let Meals = Object.values(Obj).map((item, index) => {
+    if (Number(item) === 0) {
+      return (
+        <ListItem key={index} id={"NotSelected"} obj={ArrayMeals[index]} />
+      );
+    } else {
+      return (
+        <ListItem
+          minus={MinusHandler}
+          plus={PlusHandler}
+          key={index}
+          id={"Selected"}
+          idbtn={index}
+          obj={ArrayMeals[index]}
+          quantity={item}
+        />
+      );
+    }
+  });
 
-  let obj2 = {
-    food: "Schnitzel",
-    price: 16.55,
-    quantity: Number(numbers.second),
-  };
-
-  let obj3 = { food: "Dolma", price: 20.99, quantity: Number(numbers.third) };
-
-  let obj4 = {
-    food: "Nuggets",
-    price: 20.99,
-    quantity: Number(numbers.fourth),
-  };
-
-  let CloseHandler = () => {
-    props.close();
+  let CloseAndOrder = (bool) => {
+    props.cao(bool);
   };
 
   return (
     <ul className={List.container__list}>
-      <ListItem
-        minus={MinusHandler}
-        plus={PlusHandler}
-        id={Number(numbers.first) === 0 ? "NotSelected" : "Selected"}
-        obj={obj1}
-      />
-      <ListItem
-        minus={MinusHandler}
-        plus={PlusHandler}
-        id={Number(numbers.second) === 0 ? "NotSelected" : "Selected"}
-        obj={obj2}
-      />
-      <ListItem
-        minus={MinusHandler}
-        plus={PlusHandler}
-        id={Number(numbers.third) === 0 ? "NotSelected" : "Selected"}
-        obj={obj3}
-      />
-      <ListItem
-        minus={MinusHandler}
-        plus={PlusHandler}
-        id={Number(numbers.fourth) === 0 ? "NotSelected" : "Selected"}
-        obj={obj4}
-      />
-      <TotalAmount
-        close={CloseHandler}
-        totalPrice={
-          obj1.price * obj1.quantity +
-          obj2.price * obj2.quantity +
-          obj3.price * obj3.quantity +
-          obj4.price * obj4.quantity
-        }
-      />
+      {Meals}
+      <Total cao={CloseAndOrder} />
     </ul>
   );
 };

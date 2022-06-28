@@ -1,15 +1,12 @@
-import { useState } from "react";
 import CButtonCss from "./CButton.module.css";
 
 const CButton = (props) => {
-  let [bool, setBool] = useState(true);
-  let Adding = () => {
-    props.Add(bool, props.id);
-    setBool(false);
+  let AddHandler = () => {
+    props.Add(props.id);
   };
 
   return (
-    <button id={props.id} onClick={Adding} className={CButtonCss.btn}>
+    <button onClick={AddHandler} id={props.id} className={CButtonCss.btn}>
       {props.children}
     </button>
   );

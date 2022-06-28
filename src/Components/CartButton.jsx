@@ -1,30 +1,22 @@
 import "./CartButton.css";
 import carticon from "../icons/cart-outline.svg";
-import { useContext } from "react";
 import Add from "./Context/Add";
+import { useContext } from "react";
 
 const CartButton = (props) => {
-  let ClickHandler = () => {
-    props.Click();
+  let { Animation, Sum } = useContext(Add);
+
+  let Popup = () => {
+    props.popup(true);
   };
 
-  let { numbers, animation } = useContext(Add);
   return (
-    <button
-      onClick={ClickHandler}
-      id={animation ? "animation" : ""}
-      className="btn"
-    >
+    <button onClick={Popup} id={Animation ? "animation" : ""} className="btn">
       <div className="btn__container">
         <img className="btn__container__img" src={carticon} alt="CartIcon" />
         <p className="btn__container__text">Your Cart</p>
       </div>
-      <p className="btn__number">
-        {Number(numbers.first) +
-          Number(numbers.second) +
-          Number(numbers.third) +
-          Number(numbers.fourth)}
-      </p>
+      <p className="btn__number">{Sum}</p>
     </button>
   );
 };
