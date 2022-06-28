@@ -54,7 +54,7 @@ function App() {
     setPopup(bool);
   }
 
-  //ClosePopup
+  //Close Popup
   let ClosePopup = (bool)=>{
     setPopup(bool);
   }
@@ -72,6 +72,7 @@ function App() {
     },100);
   }
 
+  //Plus
   let Plus = (id)=>{
     setIQ(prev=>{
       let obj={...prev}
